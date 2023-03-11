@@ -1,16 +1,26 @@
 import { defineConfig, loadEnv } from 'vite'
 import vue from '@vitejs/plugin-vue'
-import autoprefixer from "autoprefixer";
+import autoprefixer from "autoprefixer"
+import { resolve } from 'path'
 
 // https://vitejs.dev/config/
 export default defineConfig(({command, mode}) => {
+
+  let config = {}
+
+  const commonConfig = {
+    plugins: [vue(), htmlPlugin(loadEnv(mode, "."))],
+    resolve: {
+      alias: {
+        '@': resolve(__dirname, './src'),
+      },
+    },
+  }
+
   if (command === 'serve') {
-    return {
-      plugins: [vue(), htmlPlugin(loadEnv(mode, "."))],
-    }
+    config = {}
   } else {
-    return {
-      plugins: [vue(), htmlPlugin(loadEnv(mode, "."))],
+    config = {
       css: {
         postcss: {
           plugins: [autoprefixer],
@@ -18,6 +28,9 @@ export default defineConfig(({command, mode}) => {
       },
     }
   }
+
+  config = {...commonConfig, ...config}
+  return config
 })
 
 function htmlPlugin(env: ReturnType<typeof loadEnv>) {
