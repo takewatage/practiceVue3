@@ -12,7 +12,9 @@
     "fix": "yarn format && yarn lint"
   },
   "dependencies": {
+    "autoprefixer": "^10.4.14",
     "eslint-config-prettier": "^8.7.0",
+    "sass": "^1.58.3",
     "vue": "^3.2.45"
   },
   "devDependencies": {
