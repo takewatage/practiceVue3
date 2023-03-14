@@ -5,7 +5,10 @@ import '@vuepic/vue-datepicker/dist/main.css'
 import { UUID } from 'uuidjs'
 import { DateFormat } from '@/utilities/dateUtility'
 
-const emit = defineEmits(['update:modelValue'])
+const emit = defineEmits<{
+  (e: 'update:modelValue', value: Date): void
+  (e: 'change', value: Date): void
+}>()
 
 const props = withDefaults(
   defineProps<{
@@ -24,6 +27,7 @@ const eId = UUID.generate()
 const updateDate = (modelData: Date) => {
   console.log('update', modelData)
   emit('update:modelValue', modelData)
+  emit('change', modelData)
 }
 
 const pickerDisplayDate = computed(() => {
@@ -33,7 +37,12 @@ const pickerDisplayDate = computed(() => {
 
 <template>
   <div class="app-date-form">
-    <label class="app-date-form__label" :for="eId"> {{ props.label }} </label>
+    <label
+      class="app-date-form__label"
+      :for="eId"
+    >
+      {{ props.label }}
+    </label>
     <div class="form-control w-100 pointer">
       <VueDatePicker
         v-model="innerDate"
