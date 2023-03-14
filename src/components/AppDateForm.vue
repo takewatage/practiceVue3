@@ -31,7 +31,7 @@ const updateDate = (modelData: Date) => {
 }
 
 const pickerDisplayDate = computed(() => {
-  return DateFormat(innerDate.value)
+  return DateFormat(innerDate.value, 'YYYY年MM月')
 })
 </script>
 
@@ -48,7 +48,7 @@ const pickerDisplayDate = computed(() => {
         v-model="innerDate"
         :uid="eId"
         locale="jp"
-        format="yyyy年mm月dd日"
+        format="yyyy年mm月"
         :enable-time-picker="false"
         :clearable="false"
         :auto-apply="true"

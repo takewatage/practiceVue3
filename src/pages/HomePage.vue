@@ -30,6 +30,7 @@ const changePrefecture = async (value: string) => {
 
 const getScatteringData = async () => {
   if (!realEstateTransaction.value.checkRequired()) return
+  if (!realEstateTransaction.value.validationCheck()) return
 
   await onLoading(async () => {
     ScatteringData.value.datasets[0].data = await realEstateTransactionApi.getScatteringData(
@@ -73,6 +74,7 @@ const getScatteringData = async () => {
         value-field="id"
         text-field="name"
         @change="getScatteringData"
+        :disabled="!realEstateTransaction.area"
       />
     </div>
   </form>
@@ -81,6 +83,7 @@ const getScatteringData = async () => {
     v-if="!state"
     style="height: 400px"
   >
+    <p>結果：{{ScatteringData.datasets[0].data.length}}件</p>
     <Scatter
       :data="ScatteringData"
       :options="chartOptions"

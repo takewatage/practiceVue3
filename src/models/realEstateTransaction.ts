@@ -1,5 +1,7 @@
 import { Model, IIndexable } from '@team-decorate/alcts'
-import dayjs from 'dayjs'
+import dayjs, {Dayjs} from 'dayjs'
+import isSameOrBefore from 'dayjs/plugin/isSameOrBefore'
+dayjs.extend(isSameOrBefore)
 
 const FILLABLE = ['tradingTimeFrom', 'tradingTimeTo', 'area', 'city']
 
@@ -49,6 +51,7 @@ export default class RealEstateTransaction extends Model {
     return d.format('YYYY') + requestMonth
   }
 
+  // API Request用のデータ作成
   getRequest() {
     return {
       from: this.convertFromData(this.tradingTimeFrom),
@@ -56,5 +59,27 @@ export default class RealEstateTransaction extends Model {
       area: this.area,
       city: this.city,
     }
+  }
+
+  validationCheck () {
+    const _from = dayjs(this.tradingTimeFrom).startOf('month')
+    const _to = dayjs(this.tradingTimeTo).endOf('month')
+    if(_to.isSameOrBefore(_from)) {
+      alert('取引時期Toの値を取引時期Fromよりも後に設定してください')
+      return false
+    }
+
+    if (!this.checkMinDate(_from) || !this.checkMinDate(_to)) {
+      alert('平成17年第３四半期(7月~)より指定可能です')
+      return false
+    }
+
+    return true
+  }
+
+  // 平成17年第３四半期より指定可能
+  checkMinDate(date: Dayjs) {
+    const minDate = '2005-07-01'
+    return !date.isBefore(dayjs(minDate))
   }
 }

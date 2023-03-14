@@ -14,19 +14,18 @@ const props = withDefaults(
     label: string
     textField: string
     valueField: string
+    disabled?: boolean
   }>(),
   {
     label: '',
     textField: 'text',
     valueField: 'value',
+    disabled: false,
   }
 )
-
-console.log(props.options)
 const eId = UUID.generate()
 
 const updateDate = (event: { target: HTMLButtonElement }) => {
-  console.log('update', event.target.value)
   emit('update:modelValue', event.target.value)
   emit('change', event.target.value)
 }
@@ -40,8 +39,8 @@ const updateDate = (event: { target: HTMLButtonElement }) => {
     >
       {{ props.label }}
     </label>
-    <div class="form-control select-box">
-      <select @input="updateDate">
+    <div class="form-control select-box" :class="{'disabled': disabled}">
+      <select @input="updateDate" :disabled="disabled">
         <option value="null">選択してください</option>
         <template v-if="props.options.length">
           <option
@@ -74,6 +73,11 @@ const updateDate = (event: { target: HTMLButtonElement }) => {
     width: 100%;
     max-width: 230px;
     cursor: pointer;
+
+    &.disabled {
+      opacity: 0.5;
+      pointer-events: none;
+    }
 
     &:before {
       position: absolute;
