@@ -1,5 +1,5 @@
 import { Model, IIndexable } from '@team-decorate/alcts'
-import dayjs, {Dayjs} from 'dayjs'
+import dayjs, { Dayjs } from 'dayjs'
 import isSameOrBefore from 'dayjs/plugin/isSameOrBefore'
 dayjs.extend(isSameOrBefore)
 
@@ -61,10 +61,10 @@ export default class RealEstateTransaction extends Model {
     }
   }
 
-  validationCheck () {
+  validationCheck() {
     const _from = dayjs(this.tradingTimeFrom).startOf('month')
     const _to = dayjs(this.tradingTimeTo).endOf('month')
-    if(_to.isSameOrBefore(_from)) {
+    if (_to.isSameOrBefore(_from)) {
       alert('取引時期Toの値を取引時期Fromよりも後に設定してください')
       return false
     }

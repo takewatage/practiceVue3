@@ -39,8 +39,14 @@ const updateDate = (event: { target: HTMLButtonElement }) => {
     >
       {{ props.label }}
     </label>
-    <div class="form-control select-box" :class="{'disabled': disabled}">
-      <select @input="updateDate" :disabled="disabled">
+    <div
+      class="form-control select-box"
+      :class="{ disabled: disabled }"
+    >
+      <select
+        :disabled="disabled"
+        @input="updateDate"
+      >
         <option value="null">選択してください</option>
         <template v-if="props.options.length">
           <option

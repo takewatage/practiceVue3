@@ -73,8 +73,8 @@ const getScatteringData = async () => {
         :options="cities"
         value-field="id"
         text-field="name"
-        @change="getScatteringData"
         :disabled="!realEstateTransaction.area"
+        @change="getScatteringData"
       />
     </div>
   </form>
@@ -83,7 +83,7 @@ const getScatteringData = async () => {
     v-if="!state"
     style="height: 400px"
   >
-    <p>結果：{{ScatteringData.datasets[0].data.length}}件</p>
+    <p>結果：{{ ScatteringData.datasets[0].data.length }}件</p>
     <Scatter
       :data="ScatteringData"
       :options="chartOptions"
