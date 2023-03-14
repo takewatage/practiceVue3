@@ -12,20 +12,6 @@ export const chartConfig = {
       label: '不動産取引価格',
       backgroundColor: '#000000',
       data: [],
-      scales: {
-        x: {
-          scaleLabel: {
-            display: true,
-            labelString: '年後',
-          },
-        },
-        y: {
-          scaleLabel: {
-            display: true,
-            labelString: '万円',
-          },
-        },
-      },
     },
   ],
 }
@@ -48,7 +34,7 @@ export const chartOptions = {
       display: true,
       title: {
         display: true,
-        text: '面積（m^2）',
+        text: '面積（㎡）',
       },
     },
     y: {
